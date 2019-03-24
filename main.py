@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = "/mnt/ofc.wlpizza_storage"
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # Max 100 MB.
 ALLOWED_EXTENSIONS = [
-    'js', 'css', 'html', 'json', 'txt', 'mp4', 'avi', 'flv', 'mov', 'wmv'
+    'js', 'css', 'html', 'json', 'txt', 'mp4', 'avi', 'flv', 'mov', 'wmv',
     'png', 'jpg', 'jpeg', 'gif', 'tiff', 'bmp', 'mp3', 'wav', 'flac', 'aac',
     'ogg', 'alac', 'zip', '7z', 'rar', 'whatever']
 

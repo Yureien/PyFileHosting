@@ -4,7 +4,7 @@ import string
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.config["UPLOAD_FOLDER"] = "/home/soham/Documents/Projects/Python-Projects/PyFileHosting/uploads"
+app.config["UPLOAD_FOLDER"] = "/mnt/ofc.wlpizza_storage"
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # Max 100 MB.
 ALLOWED_EXTENSIONS = [
     'js', 'css', 'html', 'json', 'txt', 'mp4', 'avi', 'flv', 'mov', 'wmv'

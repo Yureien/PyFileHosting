@@ -20,7 +20,7 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload():
     fileob = request.files["file"]
-    fext = secure_filename(fileob.filename).split('.')[-1]
+    fext = secure_filename(fileob.filename).split('.')[-1].lower()
     if fext.lower() not in ALLOWED_EXTENSIONS:
         return "Error: Filename extension not allowed."
     filename = "{}.{}".format(''.join(sample(string.ascii_letters + string.digits, 6)), fext)

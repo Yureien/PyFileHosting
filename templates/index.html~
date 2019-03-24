@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0"/>
+        <title>We 🖤 Pizzas</title>
+        <meta name="description" content="We all love pizzas. This is a website dedicated to the Flying Pizza Monster."/>
+        <link rel="canonical" href="https://we-love.pizza"/>
+		<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+        <style>
+         body {margin: 5% auto; background: #000000; color: #f80000; font-family: 'Quicksand', sans-serif; font-size: 16px; line-height: 1.8; max-width: 73%;}
+         a {border-bottom: 1px solid #ddd; color: #fff; text-decoration: none;}
+         a:hover {border-bottom: 0;}
+		 h1, h2, h3, h4 {text-align: center;}
+		 h1 {font-size: 3em;}
+		 hr {width: 50%; color: #bb0000;}
+		 .faq-container {padding: 15px 10px 50px 10px;}
+		 .faq-container p {color: #f2f2f2;}
+		 .upload-container {min-height: 60vh;}
+		 .drop-container {width: 100%;display:flex;justify-content:center;align-items:center;}
+		 .drop-area {display:flex;justify-content:center;align-items:center;width:300px;height:300px;border: 4px dashed #ccc;color: #ddd;padding: 50px; font-size: 2.8 em;text-transform: uppercase;margin: 50px;}
+		 .drop-area p{align-text: center;}
+        </style>
+    </head>
+    <body>
+		<div class="upload-container">
+			<h1>All Hail, The Flying Pizza Monster</h1>
+			<h4>The Flying Pizza Monster has heard your prayers. You can now send your files and they'll be available for eternity*</h4>
+			<div class="drop-container">
+				<div class="drop-area">
+					<p>
+						Drag-n-Drop Your File Here,<br>
+						Or Just Do Ctrl-V.
+					</p>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="faq-container">
+		<h2>Q&A</h2>
+			<p>
+				<b>Q: What is this?</b><br>
+				A: A file hosting platform, duh. Supported: Image (JPG/PNG/GIF and maybe others, I don't remember).
+			</p>
+			<p>
+				<b>Q: Who made this?</b><br>
+				A: A friend of the Flying Pizza Monster, <b>RandomGhost#0666</b>.
+			</p>
+			<p>
+				<b>Q: Is there an API?</b><br>
+				A: No, but there will be, soon.
+			</p>
+			<p>
+				<b>Q: What kind of content does the Flying Pizza Monster hate?</b><br>
+				A: Anything that violates the T&C of other file hosting services and/or violates the law.
+			</p>
+			<p>
+				<b>Q: I found a file which might anger the Flying Pizza Monster.</b><br>
+				A: Mail me @ <a href="mailto:randomghost@pm.me">randomghost@pm.me</a>. I will remove it before His Holiness sets his eyes on its uploader.
+			</p>
+		</div>
+		<hr>
+		<h4 style="color: #fff;">By a random ghost. More specifically, <b><a href="">RandomGhost#0666</a></b>.</h4>
+	</body>
+	<script
+		src="http://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		crossorigin="anonymous"></script>
+	<script type="text/javascript">
+	 var dragHandler = function(evt){
+		 evt.preventDefault();
+	 };
+	 var dropHandler = function(evt){
+		 evt.preventDefault();
+		 var files = evt.originalEvent.dataTransfer.files;
+		 
+		 var formData = new FormData();
+		 formData.append("uploadedfile", files);
+		 
+		 var req = {
+			 url: '/upload',
+			 method: "POST",
+			 processData: false,
+			 contentType: false,
+			 data: formData,
+			 success: function(result) {
+				 console.log(result);
+			 }
+		 };
+		 
+		 var promise = $.ajax(req);
+	 };
+	 var dropHandlerSet = {
+		 dragover: dragHandler,
+		 drop: dropHandler
+	 };
+	 $(".drop-area").on(dropHandlerSet);
+	</script>
+</html>

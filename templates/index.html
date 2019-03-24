@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0"/>
+        <title>We 🖤 Pizzas</title>
+        <meta name="description" content="We all love pizzas. This is a website dedicated to the Flying Pizza Monster."/>
+        <link rel="canonical" href="https://we-love.pizza"/>
+		<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+        <style>
+         body {margin: 5% auto; background: #000000; color: #f80000; font-family: 'Quicksand', sans-serif; font-size: 16px; line-height: 1.8; max-width: 73%;}
+         a {border-bottom: 1px solid #ddd; color: #fff; text-decoration: none;}
+         a:hover {border-bottom: 0;}
+		 h1, h2, h3, h4 {text-align: center;}
+		 h1 {font-size: 3em;}
+		 hr {width: 50%; color: #bb0000;}
+		 .faq-container {padding: 15px 10px 50px 10px;}
+		 .faq-container p {color: #f2f2f2;}
+		 .upload-container {min-height: 60vh;}
+		 .drop-container {width: 100%;display:flex;justify-content:center;align-items:center;}
+		 .drop-area {display:flex;justify-content:center;align-items:center;width:300px;height:300px;border: 4px dashed #f80000;color: #ddd;padding: 50px; font-size: 2.8 em;text-transform: uppercase;margin: 50px;}
+		 .drop-area p{text-align: center;}
+		 #file-input::-webkit-file-upload-button{display: none;}
+		 #file-input {width: 100%;}
+		 #file-input::before {content: "Select a file";display:block;text-align:center;width:100%;text-transform:uppercase;padding-top:10px;padding-bottom:10px;background-color:#ddd;color:#000;font-size:1.2em;font-family:'Quicksand', sans-serif;}
+		 pre {color: #f2f2f2;background-color:#333;padding: 10px 20px;font-size:14px;font-family: "Lucida Console", Monaco, monospace;overflow-x: auto;white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;word-wrap: break-word;}
+        </style>
+    </head>
+    <body>
+		<div class="upload-container">
+			<h1>All Hail, The Flying Pizza Monster</h1>
+			<h4>The Flying Pizza Monster has heard your prayers. You can now send your files and they'll be available for eternity*</h4>
+			<div class="drop-container">
+				<div class="drop-area">
+					<form method="post" enctype="multipart/form-data" action="upload">
+						<input type="file" value="Upload" name="file" id="file-input">
+						<p>
+							Or Drag-n-Drop your file here,<br>
+							Or do Ctrl-V (Only for images).
+						</p>
+					</form>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="faq-container">
+			<h2>Q&A</h2>
+			<p>
+				<b>Q: What is this?</b><br>
+				A: A file hosting platform, duh. Check below for supported formats. Oh, and 100 MB is the limit. In case someone abuses this file hosting service, they'll get IP blocked. And TBH, this site is not worth enough to use a DDoS, or proxies.
+			</p>
+			<p>
+				<b>Q: Who made this?</b><br>
+				A: A friend of the Flying Pizza Monster, <b>RandomGhost#0666</b>.
+			</p>
+			<p>
+				<b>Q: Is there an API?</b><br>
+				A: Yes:
+				<pre>
+API PATH: {{request.base_url}}upload
+METHOD: POST
+POST DATA ->
+    FILE=(The file to upload. Proper extension as given below and less than 100 MB.)
+CURL EXAMPLE: curl -F 'file=@/path/to/file.extension' '{{request.base_url}}upload'</pre>
+			</p>
+			<p>
+				<b>Q: What kind of content does the Flying Pizza Monster hate?</b><br>
+				A: Anything that violates the T&C of other file hosting services and/or violates the law.
+			</p>
+			<p>
+				<b>Q: I found a file which might anger the Flying Pizza Monster.</b><br>
+				A: Mail me @ <a href="mailto:randomghost@pm.me">randomghost@pm.me</a>. I will remove it before His Holiness sets his eyes on its uploader.
+			</p>
+			<p>
+				<b>Supported Extensions:</b><br>
+				{{ allowed_ext }}
+			</p>
+		</div>
+		<hr>
+		<h4 style="color: #fff;">By a random ghost. More specifically, <b><a href="">RandomGhost#0666</a></b>.</h4>
+	</body>
+	<script
+		src="http://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		crossorigin="anonymous"></script>
+	<script type="text/javascript">
+	 var dragHandler = function(evt){
+		 evt.preventDefault();
+	 };
+	 var dropHandler = function(evt){
+		 evt.preventDefault();
+		 var files = evt.originalEvent.dataTransfer.files;
+		 uploadFile(files[0]);
+	 };
+
+	 function uploadFile(file) {
+		 var formData = new FormData();
+		 formData.append("file", file);
+		 var req = {
+			 url: '/upload',
+			 method: "POST",
+			 processData: false,
+			 contentType: false,
+			 data: formData,
+			 success: function(result) {
+				 if (result.startsWith("Error")) alert(result);
+				 else window.open(result, '_self');
+			 }
+		 };
+		 var promise = $.ajax(req);
+	 }
+	 var dropHandlerSet = {
+		 dragover: dragHandler,
+		 drop: dropHandler
+	 };
+	 $(".drop-area").on(dropHandlerSet);
+	 $('input[type="file"]').change( function () {
+		 uploadFile(this.files[0]);
+	 });
+	 $(document).on('paste', function (evt) {
+		 uploadFile(evt.originalEvent.clipboardData.files[0]);
+	 });
+	</script>
+</html>

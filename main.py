@@ -9,7 +9,7 @@ app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # Max 100 MB.
 ALLOWED_EXTENSIONS = [
     'js', 'css', 'html', 'json', 'txt', 'mp4', 'avi', 'flv', 'mov', 'wmv',
     'png', 'jpg', 'jpeg', 'gif', 'tiff', 'bmp', 'mp3', 'wav', 'flac', 'aac',
-    'ogg', 'alac', 'zip', '7z', 'rar', 'whatever']
+    'ogg', 'alac', 'zip', '7z', 'rar', 'pdf', 'exe']
 
 
 @app.route('/', methods=['GET', 'POST'])

@@ -20,6 +20,8 @@
 		 .drop-container {width: 100%;display:flex;justify-content:center;align-items:center;}
 		 .drop-area {display:flex;justify-content:center;align-items:center;width:300px;height:300px;border: 4px dashed #f80000;color: #ddd;padding: 50px; font-size: 2.8 em;text-transform: uppercase;margin: 50px;}
 		 .drop-area p{text-align: center;}
+		 .drop-area progress{width:100%;height:20px;margin-bottom:20px;color:#ff0000;background-color:#ff0000;}
+		 .drop-area #progressText{font-size:12px;}
 		 #file-input::-webkit-file-upload-button{display: none;}
 		 #file-input {width: 100%;}
 		 #file-input::before {content: "Select a file";display:block;text-align:center;width:100%;text-transform:uppercase;padding-top:10px;padding-bottom:10px;background-color:#ddd;color:#000;font-size:1.2em;font-family:'Quicksand', sans-serif;}
@@ -29,10 +31,12 @@
     <body>
 		<div class="upload-container">
 			<h1>All Hail, The Flying Pizza Monster</h1>
-			<h4>The Flying Pizza Monster has heard your prayers. You can now send your files and they'll be available for eternity*</h4>
+			<h4>The Flying Pizza Monster has heard your prayers. You can now send your files and they'll be available for eternity!*</h4>
 			<div class="drop-container">
 				<div class="drop-area">
 					<form method="post" enctype="multipart/form-data" action="upload">
+						<p id="progressText">Uploaded 0 bytes of 100 bytes (0 %)</p>
+						<progress id="progressBar" value="0" max="100"></progress>
 						<input type="file" value="Upload" name="file" id="file-input">
 						<p>
 							Or Drag-n-Drop your file here,<br>
@@ -84,6 +88,8 @@ CURL EXAMPLE: curl -F 'file=@/path/to/file.extension' '{{request.base_url}}uploa
 		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 		crossorigin="anonymous"></script>
 	<script type="text/javascript">
+	 $('#progressBar').hide();
+	 $('#progressText').hide();
 	 var dragHandler = function(evt){
 		 evt.preventDefault();
 	 };
@@ -97,6 +103,22 @@ CURL EXAMPLE: curl -F 'file=@/path/to/file.extension' '{{request.base_url}}uploa
 		 var formData = new FormData();
 		 formData.append("file", file);
 		 var req = {
+			 xhr: function() {
+				 var xhr = new window.XMLHttpRequest();
+				 xhr.upload.addEventListener("progress", function(evt) {
+					 if (evt.lengthComputable) {
+						 var percentComplete = Math.round(evt.loaded/evt.total*100);
+						 if (evt.total > 1024*1024)
+							 $("#progressText").text("Uploaded " + Math.round(evt.loaded/(1024*1024)) + " MB of " + Math.round(evt.total/(1024*1024)) + " MB (" + percentComplete + " %)");
+						 else if (evt.total > 1024)
+							 $("#progressText").text("Uploaded " + Math.round(evt.loaded/(1024)) + " KB of " + Math.round(evt.total/(1024)) + " KB (" + percentComplete + " %)");
+						 else
+							 $("#progressText").text("Uploaded " + evt.loaded + " bytes of " + evt.total + " bytes (" + percentComplete + "%)");
+						 $("#progressBar").val(percentComplete);
+					 }
+				 }, false);
+				 return xhr;
+			 },
 			 url: '/upload',
 			 method: "POST",
 			 processData: false,
@@ -107,6 +129,8 @@ CURL EXAMPLE: curl -F 'file=@/path/to/file.extension' '{{request.base_url}}uploa
 				 else window.open(result, '_self');
 			 }
 		 };
+		 $('#progressBar').show();
+		 $('#progressText').show();
 		 var promise = $.ajax(req);
 	 }
 	 var dropHandlerSet = {

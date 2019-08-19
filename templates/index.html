@@ -64,7 +64,7 @@
 API PATH: {{request.base_url}}upload
 METHOD: POST
 POST DATA ->
-    FILE=(The file to upload. Proper extension as given below and less than 100 MB.)
+    FILE=(The file to upload. Less than 100 MB.)
 CURL EXAMPLE: curl -F 'file=@/path/to/file.extension' '{{request.base_url}}upload'</pre>
 			</p>
 			<p>
@@ -122,7 +122,7 @@ CURL EXAMPLE: curl -F 'file=@/path/to/file.extension' '{{request.base_url}}uploa
 			 data: formData,
 			 success: function(result) {
 				 if (result.startsWith("Error")) alert(result);
-				 else $("#progressText").html("Uploaded to <a href='" + result + "'>"+ result +"</a>");
+				 else $("#progressText").html("Uploaded to<br><a href='" + result + "'>"+ result +"</a>");
 			 }
 		 };
 		 $('#progressBar').show();

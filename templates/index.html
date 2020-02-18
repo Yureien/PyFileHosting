@@ -38,6 +38,7 @@
 						<p id="progressText">Uploaded 0 bytes of 100 bytes (0 %)</p>
 						<progress id="progressBar" value="0" max="100"></progress>
 						<input type="file" value="Upload" name="file" id="file-input">
+						<input type="hidden" value="{{ auth_token }}" name="auth">
 						<p>
 							Or Drag-n-Drop your file here,<br>
 							Or do Ctrl-V (Only for images).
@@ -64,7 +65,8 @@
 API PATH: {{request.base_url}}upload
 METHOD: POST
 POST DATA ->
-    FILE=(The file to upload. Less than 100 MB.)
+	FILE=(The file to upload. Less than 100 MB.)
+	AUTH={{ auth_token }}
 CURL EXAMPLE: curl -F 'file=@/path/to/file.extension' '{{request.base_url}}upload'</pre>
 			</p>
 			<p>
@@ -98,6 +100,7 @@ CURL EXAMPLE: curl -F 'file=@/path/to/file.extension' '{{request.base_url}}uploa
 	 function uploadFile(file) {
 		 var formData = new FormData();
 		 formData.append("file", file);
+		 formData.append("auth", "{{auth_token}}");
 		 var req = {
 			 xhr: function() {
 				 var xhr = new window.XMLHttpRequest();

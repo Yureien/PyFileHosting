@@ -12,9 +12,7 @@ AUTH_TOKEN = os.environ.get('AUTH_TOKEN')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    authtoken = request.cookies.get('auth')
-    if not authtoken or authtoken != AUTH_TOKEN:
-        return "No."
+    authtoken = request.cookies.get('auth', "NOT SET")
     return render_template('index.html', auth_token=authtoken)
 
 

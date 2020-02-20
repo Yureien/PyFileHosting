@@ -51,6 +51,17 @@
 		<div class="faq-container">
 			<h2>Q&A</h2>
 			<p>
+				<b>Q: Is there an API?</b><br>
+				A: Yes:
+				<pre>
+API PATH: {{request.base_url}}upload
+METHOD: POST
+POST DATA ->
+	FILE=(The file to upload. Less than 100 MB.)
+	AUTH={{ auth_token }}
+CURL EXAMPLE: curl -F 'file=@/path/to/file.extension' -F 'auth={{ auth_token }}' '{{request.base_url}}upload'</pre>
+			</p>
+			<p>
 				<b>Q: B-but what's the auth token?</b><br>
 				A: You're not eligible to know that. If you think you are, then <a href="mailto:fadedlight@pm.me">ask me</a> nicely.
 			</p>
@@ -63,15 +74,8 @@
 				A: A friend of the Flying Pizza Monster.
 			</p>
 			<p>
-				<b>Q: Is there an API?</b><br>
-				A: Yes:
-				<pre>
-API PATH: {{request.base_url}}upload
-METHOD: POST
-POST DATA ->
-	FILE=(The file to upload. Less than 100 MB.)
-	AUTH={{ auth_token }}
-CURL EXAMPLE: curl -F 'file=@/path/to/file.extension' '{{request.base_url}}upload'</pre>
+				<b>Q: Can I self host this?</b><br>
+				A: Yes! <a href="mailto:fadedlight@pm.me">Ask me</a> nicely and I will give the source code.
 			</p>
 			<p>
 				<b>Q: What kind of content does the Flying Pizza Monster hate?</b><br>

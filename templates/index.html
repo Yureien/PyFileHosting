@@ -60,6 +60,22 @@ POST DATA ->
 	FILE=(The file to upload. Less than 100 MB.)
 	AUTH={{ auth_token }}
 CURL EXAMPLE: curl -F 'file=@/path/to/file.extension' -F 'auth={{ auth_token }}' '{{request.base_url}}upload'</pre>
+<p>There is also a simple Bash script. Don't forget to chmod +x it :)</p>
+<pre style="margin: 0; line-height: 125%">
+<span style="color: #008800; font-style: italic">#!/bin/bash</span>
+<span style="color: #B8860B">me</span><span style="color: #666666">=</span><span style="color: #BB4444">`</span>basename <span style="color: #BB4444">&quot;$0&quot;`</span>
+<span style="color: #AA22FF; font-weight: bold">if</span> <span style="color: #666666">[</span> <span style="color: #BB4444">&quot;$#&quot;</span> -ne 1 <span style="color: #666666">]</span>; <span style="color: #AA22FF; font-weight: bold">then</span>
+<span style="color: #AA22FF; font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #AA22FF">echo</span> -e <span style="color: #BB4444">&quot;USAGE:\n$me &lt;file name&gt;&quot;</span>
+<span style="color: #AA22FF">&nbsp;&nbsp;&nbsp;&nbsp;exit</span>
+<span style="color: #AA22FF; font-weight: bold">fi</span>
+<span style="color: #B8860B">FILE</span><span style="color: #666666">=</span><span style="color: #B8860B">$1</span>
+<span style="color: #AA22FF; font-weight: bold">if</span> <span style="color: #666666">[</span> ! -f <span style="color: #B8860B">$FILE</span> <span style="color: #666666">]</span>; <span style="color: #AA22FF; font-weight: bold">then</span>
+<span style="color: #AA22FF; font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #AA22FF">echo</span> <span style="color: #BB4444">&quot;File not found!&quot;</span>
+<span style="color: #AA22FF">&nbsp;&nbsp;&nbsp;&nbsp;exit </span>1
+<span style="color: #AA22FF; font-weight: bold">fi</span>
+<span style="color: #B8860B">res</span><span style="color: #666666">=</span><span style="color: #BB4444">`</span>curl -s -F <span style="color: #BB4444">&quot;file=@$FILE&quot;</span> -F <span style="color: #BB4444">&quot;auth={{ auth_token }}&quot;</span> <span style="color: #BB4444">&quot;https://ofc.we-love.pizza/upload&quot;`</span>
+<span style="color: #AA22FF">echo</span> <span style="color: #B8860B">$res</span>
+</pre>
 			</p>
 			<p>
 				<b>Q: B-but what's the auth token?</b><br>
